@@ -1,0 +1,118 @@
+#+OPTIONS: num:nil
+
+#+TITLE: Lab II. Basic dialogue management
+
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change.
+The lab will be finalised on week 5.
+Tentative deadline: 15/02
+#+END_EXAMPLE
+
+* COMMENT Notes
+
+* Preflight step 1. Getting started with development environment
+1. [[https://nodejs.org/en/download/][Download and install NodeJS]].
+2. Fork and clone the example project:
+   https://github.com/vladmaraev/react-xstate-colourchanger. Keep an
+   eye on the changes in the repo, it is still work in progress!
+3. Install the project dependencies:
+   #+begin_src sh
+   npm install 
+   #+end_src
+4. Run the project:
+   #+begin_src sh
+   npm run
+   #+end_src
+5. Your browser will open the page http://localhost:3000/react-xstate-colourchanger.
+6. Unblock the pop-up window to see the state. 
+
+* Preflight step 2. Depoying the app
+1. Open ~package.json~ and change the value of ~homepage~ to
+   ~"https://<Your_Github_Username>.github.io/<Your_Github_Repository>"~
+2. Build and deploy the app:
+   #+begin_src sh
+   npm run deploy
+   #+end_src
+3. The app will be available at
+   https://<your_github_username>.github.io/<your_github_repository>
+
+*Note: Don’t hesitate to contact me if you have any issues with preflight steps.*
+
+* Assignment
+- Task 1 ("appointment") :: Implementation of the finite state machine.
+- Task 2 ("intents") :: Implement an intent-based menu.
+- VG part :: Improve your app.
+
+** Task 1. "Appointment"
+#+CAPTION: Finite state machine for creating an appointment
+[[https://raw.githubusercontent.com/vladmaraev/rasa101/master/flowchart.png]]
+
+In this task you will need to implement the finite state machine above.
+
+I have created a starting point for you, so you basically can use the
+project that you forked before:
+- In ~./src/index.tsx~ change the ~dmMachine~ import to:
+  #+begin_src js
+  import { dmMachine } from "./dmAppointment";
+  #+end_src
+- You will need to edit the state chart in ~./src/dmAppointment.ts~
+- In order to extend your context, make appropriate changes in
+  ~./src/react-app-env.d.ts~
+- You will need to extend the grammar (~const grammar~) to
+  understand more names, times and dates.
+- You will also need to create a similar grammar to understand "yes"
+  and "no", but also "of course", "no way" etc.
+
+** Task 2. "Intents"
+In this task you will need to change your app in such way that, you
+will not force users into creating the appointment, but rather offer
+them an open-ended choice, what to do.
+
+- Start with an open-ended prompt, e.g. "What would you like to do?"
+- Let the users choose from "Appointment", "TODO item" and
+  "Timer". "Appointment" will lead to the state chart that you created
+  in Task 1, and "TODO item" and "Timer" should just contain a
+  corresponding welcome message.
+- You can code your "menu" in ~index.tsx~
+- For testing the transition you can create a simple grammar, but for
+  this assignments instead of grammar you will be using *RASA NLU*. See
+  below.
+  
+*** Creating RASA NLU service and updating the model
+1. You will need a [[https://www.heroku.com/home][Heroku account]]
+2. Deploy this template to Heroku: https://github.com/just-ai/rasa-heroku-template
+3. Read the documentation for the template. It explains how to add the
+   desired intents and re-deploy model.
+4. You will need to add intents for "Appointment", "TODO item" and
+   "Timer".
+5. Deploy the updated model.
+
+*** Invoking RASA from xstate
+1. Use the invocation in order to get the result from RASA: https://xstate.js.org/docs/guides/communication.html#invoking-promises
+2. The interface with RASA is already implemented in the bottom of
+   ~index.tsx~. Just change the ~rasaurl~ constant to the path to your
+   instance of RASA on Heroku server.
+3. You will need to implement appropriate actions and transitions for
+   both ~onDone~ and ~onError~ events.
+
+*Note*: Heroku app will sleep after 30 minutes of not receiving any
+traffic. It will take a couple of minutes for it to wake up after the
+inactive period.
+
+*** Using RASA instead for intent recognition
+Instead of querying grammar object you will need to query JSON object
+fetched from RASA service.
+
+
+** VG part. Improvements
+1. Write a report which will describe errors and limitation of your
+   app.
+2. Try to fix some of them and briefly describe your solution in the
+   report.
+
+* Submission
+- G part :: submit two links:
+  - link to your forked repo
+  - URL of the deployed app
+- VG part :: include the report in your repository. Please name it
+  ~lab2VG.pdf~ (can be also Markdown or Org-mode file, but not Word).
