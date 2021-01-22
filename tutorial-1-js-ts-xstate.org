@@ -1,3 +1,4 @@
+*  COMMENT
 #+begin_src elisp
   (set-face-attribute 'default nil :height 180)
   (powerline-reset)
@@ -6,16 +7,61 @@
 #+RESULTS:
 : #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ())
 
+* 
+
+
+
+
+
+
+
+
+
+
+
+
+Welcome to the tutorial!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 * Overview
 You will have 5 labs:
 |   | Title                                    | Session    | Prelim. deadline |
 |---+------------------------------------------+------------+------------------|
-| 1 | [[lab1.org][Basic dialogue management]]                | 22/1 & 5/2 | 15/2             |
-| 2 | NLU for dialogue systems                 | see Canvas | see Canvas       |
+| 1 | NLU for dialogue systems                 | see Canvas | see Canvas       |
+| 2 | [[lab1.org][Basic dialogue management]]                | 22/1 & 5/2 | 15/2             |
 | 3 | [[lab3.org][TTS]]                                      | 12/2       | 25/2             |
 | 4 | [[lab4.org][Form-filling dialogue management and ASR]] | 19/2       | 4/3              |
 | 5 | Dialogue                                 | see Canvas | see Canvas       |
-
 
 * Programming environment
 You will be learning many technologies through this
@@ -27,7 +73,7 @@ React.
 Prerequisites: 
 - Browser :: Google Chrome, Microsoft Edge or Firefox Nightly (see
   [[https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition#browser_compatibility][speech recognition browser compatibility]])
-- NodeJS :: [[https://nodejs.org/en/download/][download and install NodeJS]]
+- NodeJS :: [[https://nodejs.org/en/download/][download and install NodeJS]] (the latest version)
 - Text editor :: your editor of choice (e.g. Emacs or VS Code)
 - Github account :: you need to have one, and also know at least a
   little bit about git.
@@ -38,7 +84,7 @@ Prerequisites:
 
 ** Motivation
 1. Many systems on the market are proprietary: the code is either not
-   available (Dialogue Flow) or one need to look how things are
+   available (DialogueFlow) or one need to look how things are
    actually implemented in the code (not in the documentation) RASA.
 2. In the past (before 2020) we used VoiceXML, and in 2020 we used
    RASA. VoiceXML was great for dialogue management, because it was
@@ -67,7 +113,7 @@ Prerequisites:
 * Get started with JavaScript
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
 
-** Run in the browser
+** Run the browser
 - Web Console (Ctrl-Shift-I or Cmd-Option-K)
 - Multi-line input (Ctrl/Cmd-B)
 
@@ -85,8 +131,8 @@ document.writeln('Hello, world!');
 
 ** Basics
 *** Grammar
-- comments: ~//~ (or ~/* */~)
-- reserved words can’t be used as variables or even objest properties
+- comments: ~//~ (or ~/*  */~)
+- reserved words can’t be used as variables or even object properties
   #+begin_example
   abstract
   boolean break byte
@@ -201,7 +247,8 @@ const numbers = [
       document.writeln(numbers[i]);
   }
 
-  for (i = 0; i < numbers.length; i += 1) {
+  // fix me!
+  for (n in numbers) {
       document.writeln(n);
   }
 
