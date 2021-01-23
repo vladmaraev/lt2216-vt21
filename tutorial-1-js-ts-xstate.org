@@ -58,7 +58,7 @@ You will have 5 labs:
 |   | Title                                    | Session    | Prelim. deadline |
 |---+------------------------------------------+------------+------------------|
 | 1 | NLU for dialogue systems                 | see Canvas | see Canvas       |
-| 2 | [[lab1.org][Basic dialogue management]]                | 22/1 & 5/2 | 15/2             |
+| 2 | [[lab2.org][Basic dialogue management]]                | 22/1 & 5/2 | 15/2             |
 | 3 | [[lab3.org][TTS]]                                      | 12/2       | 25/2             |
 | 4 | [[lab4.org][Form-filling dialogue management and ASR]] | 19/2       | 4/3              |
 | 5 | Dialogue                                 | see Canvas | see Canvas       |
