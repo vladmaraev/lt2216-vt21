@@ -11,7 +11,7 @@ Tentative deadline: 15/02
 * COMMENT Notes
 
 * Preflight step 1. Getting started with development environment
-1. [[https://nodejs.org/en/download/][Download and install NodeJS]].
+1. [[https://nodejs.org/en/download/][Download and install NodeJS]] (LTS version).
 2. Fork and clone the example project:
    https://github.com/vladmaraev/react-xstate-colourchanger. Keep an
    eye on the changes in the repo, it is still work in progress!
@@ -21,14 +21,14 @@ Tentative deadline: 15/02
    #+end_src
 4. Run the project:
    #+begin_src sh
-   npm run
+   npm start
    #+end_src
 5. Your browser will open the page http://localhost:3000/react-xstate-colourchanger.
 6. Unblock the pop-up window to see the state. 
 
 * Preflight step 2. Depoying the app
 1. Open ~package.json~ and change the value of ~homepage~ to
-   ~"https://<Your_Github_Username>.github.io/<Your_Github_Repository>"~
+   ~https://<Your_Github_Username>.github.io/<Your_Github_Repository>~
 2. Build and deploy the app:
    #+begin_src sh
    npm run deploy
