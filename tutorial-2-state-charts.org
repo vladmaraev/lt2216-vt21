@@ -1,0 +1,121 @@
+* Statecharts
+
+** In a nutshell
+- Invented by David Harel (1987)
+- Statecharts = extended state machines:
+  - hierarchy
+  - concurrency
+  - broadcast communication of events
+- Graphical notation with exact syntax and semantics
+- Can be translated into running code
+- Has a W3C standard: SCXML (State Chart XML)
+
+
+** State, event, condition, clustering and default state
+#+begin_src plantuml :file abcd.svg
+state D {
+  state A {
+}
+  state C {
+}
+}
+A --> C : γ(P)
+B --> A : α
+B --> C : δ
+D --> B : β
+#+end_src
+
+#+RESULTS:
+[[file:abcd.svg]]
+*** toothbrush
+#+begin_src plantuml :file tb_general.svg
+[*] --> IDLE
+NORMAL --> CAUTION : γ(P>th)
+CAUTION --> NORMAL : γ(P≤th)
+IDLE --> NORMAL : onoff
+NORMAL --> IDLE : onoff
+IDLE --> CAUTION : onoff
+CAUTION --> IDLE : onoff
+#+end_src
+
+#+RESULTS:
+[[file:tb_general.svg]]
+
+#+begin_src plantuml :file my-diagram2.svg
+[*] --> IDLE
+state BRUSHING {
+  [*] --> NORMAL
+ NORMAL --> CAUTION : γ(P>th)
+ CAUTION --> NORMAL : γ(P≤th)
+}
+IDLE --> BRUSHING : onoff
+BRUSHING --> IDLE : onoff
+#+end_src
+
+#+RESULTS:
+[[file:my-diagram2.svg]]
+
+- what if... we turn it on with greater pressure?
+
+** Delays and timeouts
+~timeout(event, number)~
+
+*** toothbrush
+Let’s look at 30s interval thing:
+- After each 30s of operation, the toothbrush produces a short
+  stuttering sound and blinks the Smart Ring.
+- After 2m it produces longer stuttering and blink
+
+~timeout(entered Q1, 500)~
+~timeout(entered stutter, 500)~
+
+~timeout(entered stutter, 1500)~
+
+#+begin_src plantuml :file tb_Q1-4.svg
+state BRUSHING {
+  [*] --> Q1
+   Q1 --> st1 : timeout(entered Q1, 30000)
+   st1 --> Q2 : timeout(entered st1, 500)
+   Q2 --> st2 : timeout(entered Q2, 30000)
+   st2 --> Q3 : timeout(entered st2, 500)
+   Q3 --> st3 : timeout(entered Q3, 30000)
+   st3 --> Q4 : timeout(entered st3, 500)
+   Q4 --> stL : timeout(entered Q4, 30000)
+   stL --> Q1 : timeout(entered stL, 1500)
+}
+#+end_src
+
+#+RESULTS:
+[[file:tb_Q1-4.svg]]
+
+
+
+** History state (H/H*)
+*** toothbrush
+#+begin_src plantuml :file tb_Q1-4-H.svg
+[*] --> IDLE 
+state BRUSHING {
+  [*] --> Q1
+   Q1 --> st1 : timeout(entered Q1, 30000)
+   st1 --> Q2 : timeout(entered st1, 500)
+   Q2 --> st2 : timeout(entered Q2, 30000)
+   st2 --> Q3 : timeout(entered st2, 500)
+   Q3 --> st3 : timeout(entered Q3, 30000)
+   st3 --> Q4 : timeout(entered st3, 500)
+   Q4 --> stL : timeout(entered Q4, 30000)
+   stL --> Q1 : timeout(entered stL, 1500)
+   IDLE --> [H] : onoff
+}
+BRUSHING --> IDLE : onoff
+#+end_src
+
+#+RESULTS:
+[[file:tb_Q1-4-H.svg]]
+
+
+*** clear-history
+
+** XState
+- adheres to the SCXML specification
+
+* What does it have to do with dialogue systems?
