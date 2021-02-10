@@ -2,14 +2,6 @@
 
 #+TITLE: Lab II. Basic dialogue management
 
-#+BEGIN_EXAMPLE
-This version is preliminary and subject to change.
-The lab will be finalised on week 5.
-Tentative deadline: 15/02
-#+END_EXAMPLE
-
-* COMMENT Notes
-
 * Preflight step 1. Getting started with development environment
 1. [[https://nodejs.org/en/download/][Download and install NodeJS]].
 2. Fork and clone the example project:
