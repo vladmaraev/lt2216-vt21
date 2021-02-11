@@ -103,8 +103,9 @@ fetched from RASA service.
    report.
 
 * Submission
-- G part :: submit two links:
+- G part :: submit three links:
   - link to your forked repo
+  - link to the repo with your RASA instance
   - URL of the deployed app
 - VG part :: include the report in your repository. Please name it
   ~lab2VG.pdf~ (can be also Markdown or Org-mode file, but not Word).
