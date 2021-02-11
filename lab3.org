@@ -1,0 +1,68 @@
+#+OPTIONS: toc:nil num:nil
+#+TITLE: Speech synthesis lab
+
+In this lab session you will practice styling TTS output using Speech Synthesis Markup Language (SSML). It is assumed that you have read the relevant literature on the subject before attempting to solve the assignments.
+
+For reference:
+- Speech Synthesis Markup Language (SSML) Version 1.0, W3C Recommendation 7 September 2004, http://www.w3.org/TR/speech-synthesis/
+- Documentation for implementation in each of the platforms
+
+You can use one of the TTS platforms:
+- Google TTS: [[https://cloud.google.com/text-to-speech/docs/ssml][Docs]], you can test it in the Google Actions Console
+- Amazon Polly: [[https://developer.amazon.com/en-GB/docs/alexa/custom-skills/speech-synthesis-markup-language-ssml-reference.html][Docs]], [[https://console.aws.amazon.com/polly/home/SynthesizeSpeech][Test]]
+- IBM Watson: [[https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-ssml&cm_mc_uid=40249035982415833944697&cm_mc_sid_50200000=96929811583394469719&cm_mc_sid_52640000=99688681583394469725][Docs]], [[https://text-to-speech-demo.ng.bluemix.net/?cm_mc_uid=40249035982415833944697&cm_mc_sid_50200000=96929811583394469719&cm_mc_sid_52640000=99688681583394469725#reset][Demo]]
+
+  
+- for VG :: you will need to show extensive use of SSML tags, especially with regard to phonemes and prosody modification.
+
+* Part A: SSML warm-up exercise
+If you listen to the TTS output of the sentences:
+#+BEGIN_EXAMPLE
+The biggest loser among the top 10 cryptocurrencies is bitcoin cash (BCH), down 10.58 percent in the last 24 hours. It's also down 24.11 percent from the recent high of $1,641.40. 
+#+END_EXAMPLE
+
+it does not sound very good. Here is what seems wrong (depending on the platform, this is for ProphecyTTS):
+
+- "cryptocurrencies" is pronounced incorrectly  
+- 10.58 should be read as "ten point fifty-eight"
+- The sentence overall sound is not very clear for a listener. Imagine hearing these kind of news on the radio, would you understand it?
+
+Modify the sentence by adding some relevant SSML tags. Try to make use of all these tags: ~<prosody>~, ~<break>~, ~<say-as>~, ~<phoneme>~ and ~<emphasis>~.
+* Part B: The sound of dialogue
+The objective of this assignment is to "style" dialogue system's utterances. Here is what are going to work with:
+#+BEGIN_SRC xml
+I have your calendar open. 
+<break strength="medium"/> 
+For what date? 
+<break strength="medium"/> 
+What time would you like to start? 
+<break strength="medium"/> 
+How much time do you want to block out? 
+<break strength="medium"/> 
+What shall we call this? 
+<break strength="medium"/> 
+Ok. [create and style the appointment summary!]
+#+END_SRC
+
+Your job is to create the last utterance and to make all the system's utterances articulate better by inserting SSML tags in the dialogue.
+
+* Part C: Speech Synthesis Poetry Slam
+#+BEGIN_QUOTE
+A poetry slam is a competition at which poets read or recite original work (or, more rarely, that of others). These performances are then judged on a numeric scale by previously selected members of the audience. (Wikipedia)
+#+END_QUOTE
+
+Your task in this assignment is to use SSML in order to get an artificial poet to recite the your favourite poem (just a couple of verses) with a speed and in "a style" similar to the way how it is read by an actor (or by a poet her/himself). 
+
+You can refer to some poetry performance found on YouTube or
+elsewhere.
+
+Sources for inspiration:
+- [[https://www.youtube.com/watch?v=IZYoGj8D8pY][California Dreaming]] (386DX art project).
+- [[https://raw.githubusercontent.com/vladmaraev/rasa101/master/withoutme.m4a][Without Me]], which was made by Robert Rhys Thomas in 2019 for this course.
+- [[file:media/partC_badguy_voiced.mp3][Bad Guy]], which was made by Fang Yuan in 2020 for this course.
+
+* Submission
+In you submission mention which platform did you use and provide:
+1) text files with your SSML code (for parts A, B and C)
+2) audio file for Part C
+3) reference for the performance for Part C
