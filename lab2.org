@@ -91,6 +91,15 @@ them an open-ended choice, what to do.
 traffic. It will take a couple of minutes for it to wake up after the
 inactive period.
 
+*Note 2:* In my example of RASA service I use "cors-anywhere" proxy
+which now requires you to first open the page
+https://cors-anywhere.herokuapp.com/ and press the button there to use
+the proxy. Another possible workaround is to enable CORS in the last
+line of ~server.sh~ in RASA-Heroku app:
+#+begin_src sh
+rasa run --enable-api --port $PORT --cors
+#+end_src
+
 *** Using RASA instead for intent recognition
 Instead of querying grammar object you will need to query JSON object
 fetched from RASA service.
