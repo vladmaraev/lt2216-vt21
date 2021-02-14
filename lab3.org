@@ -1,4 +1,4 @@
-#+OPTIONS: toc:nil num:nil
+#+OPTIONS: toc:t num:nil
 #+TITLE: Speech synthesis lab
 
 In this lab session you will practice styling TTS output using Speech Synthesis Markup Language (SSML). It is assumed that you have read the relevant literature on the subject before attempting to solve the assignments.
