@@ -1,0 +1,96 @@
+
+* Speech recognition grammars
+Why do we need grammars?
+
+** XML
+https://en.wikipedia.org/wiki/XML
+
+Small XML lexicon:
+- tag: ~<grammar></grammar>~
+- empty-element tag: ~<ruleref/>~
+- element: ~<item>medium</item>~
+- attributes: ~<ruleref uri="#pizza"/>~
+
+** SRGS: Speech Recognition Grammar Specification
+*** playground: 
+*** grammar rules
+- the grammar consists of rules
+- ~root~ parameter refers to the top rule ~id~
+- ~<ruleref>~ defines the reference from one rule to another by id (note
+  the ~#~ symbol)
+- ~<tag>~ contains semantic representation string
+#+begin_src xml
+<grammar root="order">
+   <rule id="order">
+      <ruleref uri="#pizza"/>
+   </rule>
+   <rule id="pizza">
+      <one-of>
+         <item>medium</item>
+         <item>small</item>
+      </one-of>
+   </rule>
+</grammar>
+#+end_src
+*** items, repeat and one-of
+#+begin_src xml
+   <rule id="pizza">
+      I <item repeat="0-">really</item>
+      want a
+      <one-of>
+         <item>medium</item>
+         <item>small</item>
+      </one-of>
+   </rule>
+#+end_src
+*** tags and semantic interpretation
+- https://www.w3.org/TR/semantic-interpretation/
+**** rule variables (identified by ~out~)
+  - ~out~              (identifies the Rule Variable)
+  - ~out.pizza~        (identifies the pizza property of the Rule Variable)
+  #+begin_src xml
+  <grammar root="order">
+    <rule id="order">
+       <ruleref uri="#pizza"/>
+       <tag>out.pizza=rules.pizza;</tag>
+    </rule>
+    <rule id="pizza">
+       <one-of>
+          <item>medium<tag>out.pizzasize='M'</tag></item>
+          <item>small<tag>out.pizzasize='S'</tag></item>
+       </one-of>
+    </rule>
+  </grammar>  
+  #+end_src
+**** more complex objects
+#+begin_src js
+out.order=Object(); out.order.pizza=rules.pizza;
+#+end_src
+**** default assignment
+#+begin_src xml
+<rule id="pizza">
+  <tag>out.pizzasize='M'</tag>
+  ...
+</rule>
+#+end_src
+*** SRGS in XState
+
+* Advanced dialogue management
+** VoiceXML
+
+** timeout and no input
+
+** re-prompt
+
+** tapered prompts
+
+** links and their scope
+
+** NEXT LECTURE: form-filling
+
+** NEXT LECTURE (if time permits): getting more from speech recognition
+
+** no coverage:
+- audio playback
+- audio recording 
+
