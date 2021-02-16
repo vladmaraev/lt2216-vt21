@@ -19,7 +19,10 @@ Small XML lexicon:
 ** SRGS: Speech Recognition Grammar Specification
 https://www.w3.org/TR/speech-grammar/
 
-*** playground: 
+*** playground:
+- Download SRGS parser developed by Peter Torbjörn Lager and Peter
+  Ljunglöf: [[srgslab.zip]]
+- unzip and open ~index.html~ 
 *** grammar rules
 - the grammar consists of rules
 - ~root~ parameter refers to the top rule ~id~
