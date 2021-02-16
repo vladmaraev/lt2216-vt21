@@ -5,13 +5,20 @@ Why do we need grammars?
 ** XML
 https://en.wikipedia.org/wiki/XML
 
+Subsets:
+- SSML
+- SRGS
+
 Small XML lexicon:
-- tag: ~<grammar></grammar>~
+- tag: ~<emphasis> Hey! </emphasis>~
 - empty-element tag: ~<ruleref/>~
-- element: ~<item>medium</item>~
+- element: ~<item><i>medium</i><tag/></item>~
 - attributes: ~<ruleref uri="#pizza"/>~
+- comments: ~<!-- Two properties (drinksize, type) on left hand side Rule Variable -->~
 
 ** SRGS: Speech Recognition Grammar Specification
+https://www.w3.org/TR/speech-grammar/
+
 *** playground: 
 *** grammar rules
 - the grammar consists of rules
@@ -73,19 +80,57 @@ out.order=Object(); out.order.pizza=rules.pizza;
   ...
 </rule>
 #+end_src
+**** final version of the example
+#+begin_src xml
+<grammar root="order">
+   <rule id="order">
+      <ruleref uri="#pizza"/>
+      <tag>out.order=Object(); out.order.pizza=rules.pizza;</tag>
+   </rule>
+   <rule id="pizza">
+      <tag>out.pizzasize='M'</tag>
+      <item repeat="0-">I really want a</item>
+      <item repeat="0-">
+        <one-of>
+         <item>medium<tag>out.pizzasize='M';</tag></item>
+         <item>small<tag>out.pizzasize='S';</tag></item>
+        </one-of>
+      </item>
+      pizza
+      <item repeat="0-"><ruleref uri="#topping"/></item>
+      <tag>out.topping=rules.topping;</tag>
+   </rule>
+   <rule id="topping">
+      with
+     <one-of>
+         <item>pepperoni<tag>out='pepperoni';</tag></item>
+         <item>anchovi<tag>out='anchovi';</tag></item>
+      </one-of>
+   </rule>
+</grammar>
+#+end_src
 *** SRGS in XState
 
-* Advanced dialogue management
-** VoiceXML
-
-** timeout and no input
-
-** re-prompt
-
-** tapered prompts
+* COMMENT Advanced dialogue management
+** "towards" VoiceXML
+https://www.w3.org/TR/voicexml20/
 
 ** links and their scope
+- 
+  
+** timeout and noinput
+- on timeout: stop recognising and throw event
+- additional event "catcher" in ASR
+- limitation: technically it is not a silence, but we also don’t allow
+  user to speak longer than the timeout
+  - how can this be fixed?
 
+** re-prompt and non-local noinput handling
+- history state, shallow and deep
+  
+** tapered prompts
+- same-level transition?
+  
 ** NEXT LECTURE: form-filling
 
 ** NEXT LECTURE (if time permits): getting more from speech recognition
