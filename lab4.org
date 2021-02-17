@@ -1,0 +1,150 @@
+#+TITLE: Lab IV. Speech grammars and advanced dialogue management
+
+#+BEGIN_EXAMPLE
+This version is preliminary and subject to change
+#+END_EXAMPLE
+
+In this lab session you will practice writing speech recognition
+grammars in the style of Speech Recognition Grammar Specification
+(SRGS) and Semantic Interpretation for Speech Recognition (SISR). It
+is assumed that you have read the relevant literature on the subject
+before attempting to solve the assignments.
+
+In order to test your grammars, you can use the playground: SRGS
+parser developed by Peter Torbjörn Lager and Peter Ljunglöf:
+[[srgslab.zip]] (unzip and open ~index.html~).
+
+* Warm-up: recognising funny quotes
+Here is a wellknown but still funny listing of short quotes:
+| to do is to be | Socrates |
+| to be is to do | Sartre   |
+| do be do be do | Sinatra  |
+
+Your task here is to:
+
+1. Write an SRGS grammar that covers exactly these quotes, and no
+   other sentences/utterances. 
+2. Add semantic tags to your grammar, so as to enable the parser to
+   return the name corresponding to the source of the recognized quote
+   (e.g. 'socrates').
+3. At this point you can test how such a simple grammar can be
+   imported and parsed within your XState app.
+   - I have composed an example of how the parser can be loaded and
+     used in the file ~dmColourChanger.ts~. It just outputs the result
+     to the console when the file is loaded.
+   - You will need to create a grammar file analogously to
+     ~pizzaGrammar.ts~ and put it in ~./src/grammars/~.
+   - Think about how the ~result~ object can be further used in your
+     code.
+
+     
+* Recognizing simple commands
+Suppose that you want to voice control your intelligent home, and be
+able to say things like:
+#+BEGIN_EXAMPLE
+turn off the light
+turn on the light
+turn off the air conditioning
+turn on the AC
+turn on the heat
+open the window
+close the door
+open the door
+close the window
+#+END_EXAMPLE
+
+Your task here is to:
+1. Write a grammar that covers the above utterances. In principle, you
+   could solve this by writing a grammar that just listed them
+   all. This is not allowed in this exercise however. Instead, I want
+   you to write a grammar that makes use of at least three rules. In
+   order to give you a good start, I have written one rule for you:
+   #+BEGIN_SRC xml
+     <rule id="object">
+       <one-of>
+          <item> light </item>
+          <item> heat </item>
+          <item> A C <tag> out = 'air conditioning'; </tag></item>
+          <item> air conditioning </item>
+          <item> window </item>
+          <item> door </item>
+       </one-of>
+     </rule>
+   #+END_SRC
+   You will need at least two more rules: one rule for "action", and
+   one rule that ties "object" and "action" together.
+2. Add semantic tags to your grammar, in such a way that the
+   interpretation of what is being said becomes an object (a
+   JavaScript object, to be more precise). For example, if you say
+   "turn the AC off" the parser should return the object:
+   #+BEGIN_SRC js
+   {"object": "air conditioning",
+    "action": "off"}
+   #+END_SRC
+3. Now, you want to be able to be polite to your intelligent home,
+   don't you? Add rule(s) that will allow you to start your utterances
+   with an optional "please", as in "please close the door".
+4. Finally, your grammar most likely suffers from the problem that
+   "open the air conditioning" is recognized. This is not optimal. Try
+   to revise your grammar in a way that will fix this problem.
+
+Now implement a simple State Chart in the file ~dmSmartHome.js~ which
+will use your grammar.
+
+* Improving your voice interface
+Switch back to your ~dmAppointment.ts~ application from Lab II. Now you
+will need to implement some improvements.
+
+*Note:* try not to copy and paste the same code, use functions to abstract
+certain blocks.
+
+1. Make sure that system handles unexpected input. 
+2. A opportunity to say "help" at any point when system is recognising
+   something. You should provide a help message (anything you like)
+   and return the user to the state where they were before asking for
+   help.
+3. Implement the timeouts, so the system will ask again if it did not
+   get any input from the user for N seconds. Use different
+   formulations for your re-prompts.
+4. If the user is silent and not reacting to 3 reprompts, return to
+   the idle state.
+
+* Submission
+Redeploy your app to Github pages and submit two links: 1) Github
+pages URL and 2) URL of your repository.
+
+* (VG part) Frame-based dialogue system
+
+Frame-based dialogue system allows a user to do is to provide
+information not only in a fixed number of pieces, but also in "one
+shot". For example, if someone has to order a merchandise, they might
+spell their address and their post number alltogether, without waiting
+the system to ask for each information.
+
+For example, in the case of a booking flight system, a user could fill
+the required "information slots" in many ways. For example, she could
+say in one utterance where she wants to go and when she wants to
+leave, or where she wants to go and from where she wants to leave, and
+so on. You need to handle these cases and make sure that the
+information is stored accordingly.
+
+Create a variant of ~dmAppointment.ts~ which will be able to behave
+similarly to [[https://www.w3.org/TR/voicexml20/#dml2.1.6][form interpretation algorithm (FIA)]] in VoiceXML. Namely, the
+variant should be able to:
+1. Recognise one-shot and incomplete requests, e.g. "create meeting
+   with Bob on Friday at noon", "create meeting with Bob on Friday",
+   "create meeting with Bob".
+2. If request is incomplete, system should only ask for the slots that
+   are missing. 
+3. The system should allow over-answering, e.g. it should be able to
+   understand "Bill on Friday" and an answer to the question "Who are
+   you meeting with?".
+
+*Note 1*: You might find the orthogonal states useful for this task.
+
+*Note 2*: Some behaviour might be tricky to implement, so partial
+solutions are accepted. Please comment on your design choices.
+
+Redeploy your app to Github pages and submit two links: 1) Github
+pages URL and 2) URL of your repository.
+
