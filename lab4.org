@@ -106,7 +106,8 @@ certain blocks.
 3. Implement the timeouts, so the system will ask again if it did not
    get any input from the user for N seconds. Use different
    formulations for your re-prompts.
-4. If the user is silent and not reacting to 3 reprompts, return to
+4. Use the same re-prompts for the out-of-grammar situations.
+5. If the user is silent and not reacting to 3 reprompts, return to
    the idle state.
 
 * Submission

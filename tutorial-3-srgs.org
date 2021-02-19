@@ -114,14 +114,12 @@ out.order=Object(); out.order.pizza=rules.pizza;
 #+end_src
 *** SRGS in XState
 
-* COMMENT Advanced dialogue management
+* Advanced dialogue management
 ** "towards" VoiceXML
 https://www.w3.org/TR/voicexml20/
 
-** links and their scope
-- 
-  
-** timeout and noinput
+** ’links’ and their scope
+** timeout and maxspeech
 - on timeout: stop recognising and throw event
 - additional event "catcher" in ASR
 - limitation: technically it is not a silence, but we also don’t allow
@@ -132,13 +130,124 @@ https://www.w3.org/TR/voicexml20/
 - history state, shallow and deep
   
 ** tapered prompts
-- same-level transition?
+- same-level transition
+- counter and guards
   
-** NEXT LECTURE: form-filling
+** form-filling (or frame-based DM)
+Helps to support initiative from the user (mixed initiative).
 
-** NEXT LECTURE (if time permits): getting more from speech recognition
+Frame structure:
+| Field  | Value  |
+|--------+--------|
+| ORIGIN | Paris  |
+| DEST   | London |
+| DATE   | Jan 13 |
+| TIME   | 3      |
+
+#+BEGIN_EXAMPLE
+S: Welcome to the travel booking system.
+   You can now make your reservation
+U: I want to go to London
+S: From where do you want to go?
+U: From Paris
+S: Which date do you want to go?
+U: On the 13th of January
+S: At what time do you want to go?
+U: Three o’clock
+S: Thanks for your reservation ...
+#+END_EXAMPLE
+
+*** or shorter dialogue:
+#+BEGIN_EXAMPLE
+U: I want to go from Paris to London
+S: Which date do you want to go?
+U: Three o’clock on the 13th of January
+S: Thanks for your reservation ...
+#+END_EXAMPLE
+
 
 ** no coverage:
 - audio playback
 - audio recording 
+
+* COMMENT To be continued: Dialogue Systems 2
+*** Dialogue Systems 2 course
+- Elective course, 3rd semester
+- Focus on:
+  - Information State Update approach to DM
+  - Implementing general dialogue strategies that work across domains
+  - Evaluating dialogue systems with respect to dialogue strategies that they can handle
+  - Lab and project based
+
+* Live coding:
+#+begin_src js
+export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
+    initial: 'init',
+    states: {
+        init: {
+            on: {
+                CLICK: 'askColourAndShape'
+            }
+        },
+        askColourAndShape: {
+            initial: 'colour',
+            on: {
+                RECOGNISED:
+                {
+                    target: 'stop',
+                    actions: cancel('maxsp'),
+                    cond: (context) => context.recResult === 'stop'
+                },
+                MAXSPEECH: 'maxspeech'
+            },
+            states: {
+                hist: { type: 'history', history: 'deep' },
+                colour: {
+                    on: {
+                        RECOGNISED: [
+                            {
+                                target: 'shape',
+                                actions: cancel('maxsp'),
+                                cond: (context) => !(context.recResult in commands)
+                            }],
+                    },
+                    ...promptAndAsk("Tell me the colour"),
+                },
+                shape: {
+                    on: {
+                        RECOGNISED: [
+                            {
+                                target: '#root.dm.repaint',
+                                actions: cancel('maxsp'),
+                                cond: (context) => !(context.recResult in commands)
+                            }],
+                    },
+                    ...promptAndAsk("Tell me the shape")
+                },
+            }
+        },
+        maxspeech: {
+            entry: say("Sorry"),
+            on: { 'ENDSPEECH': 'askColourAndShape.hist' }
+        },
+        stop: {
+            entry: say("Ok"),
+            always: 'init'
+        },
+        repaint: {
+            initial: 'prompt',
+            states: {
+                prompt: {
+                    entry: sayColour,
+                    on: { ENDSPEECH: 'repaint' }
+                },
+                repaint: {
+                    entry: 'changeColour',
+                    always: '#root.dm.askColourAndShape'
+                }
+            }
+        }
+    }
+})
+#+end_src
 
