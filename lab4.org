@@ -139,7 +139,7 @@ variant should be able to:
 2. If request is incomplete, system should only ask for the slots that
    are missing. 
 3. The system should allow over-answering, e.g. it should be able to
-   understand "Bill on Friday" and an answer to the question "Who are
+   understand "Bill on Friday" as an answer to the question "Who are
    you meeting with?".
 
 *Note 1*: You might find the orthogonal states useful for this task.
