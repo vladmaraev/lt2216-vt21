@@ -92,7 +92,8 @@ Now implement a simple State Chart in the file ~dmSmartHome.js~ which
 will use your grammar.
 
 * Improving your voice interface
-Switch back to your ~dmAppointment.ts~ application from Lab II. Now you
+Switch back to your ~dmAppointment.ts~ application from Lab II. Create a
+copy of it ~dmAppointmentPlus.ts~ and 'route' ~index.tsx~ to it. Now you
 will need to implement some improvements.
 
 *Note:* try not to copy and paste the same code, use functions to abstract
