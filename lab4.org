@@ -88,7 +88,7 @@ Your task here is to:
    "open the air conditioning" is recognized. This is not optimal. Try
    to revise your grammar in a way that will fix this problem.
 
-Now implement a simple State Chart in the file ~dmSmartHome.js~ which
+Now implement a simple State Chart in the file ~dmSmartHome.ts~ which
 will use your grammar.
 
 * Improving your voice interface
