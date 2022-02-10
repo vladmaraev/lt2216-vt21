@@ -1,3 +1,5 @@
+#+OPTIONS: num:nil
+
 #+TITLE: Lab IV. Speech grammars and advanced dialogue management
 
 #+BEGIN_EXAMPLE
@@ -12,7 +14,8 @@ before attempting to solve the assignments.
 
 In order to test your grammars, you can use the playground: SRGS
 parser developed by Peter Torbjörn Lager and Peter Ljunglöf:
-[[srgslab.zip]] (unzip and open ~index.html~).
+[[https://github.com/vladmaraev/lt2216-vt21/blob/master/srgslab.zip]]
+(unzip and open ~index.html~).
 
 * Warm-up: recognising funny quotes
 Here is a wellknown but still funny listing of short quotes:
